@@ -1,0 +1,76 @@
+# ==========================================
+# UNITY (Directorios temporales y autogenerados)
+# ==========================================
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+
+# ==========================================
+# UNITY (Archivos de Visual Studio y proyectos)
+# ==========================================
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Ignorar archivos meta de cosas autogeneradas
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Crash reports
+sysinfo.txt
+
+# Compilaciones (No subir los .exe o .apk al código fuente)
+*.apk
+*.aab
+*.unitypackage
+*.app
+*.exe
+
+# ==========================================
+# LATEX (Archivos temporales de la documentación)
+# ==========================================
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.lof
+*.lot
+# Nota: No ignoramos el *.pdf para que vuestro profesor pueda descargar la memoria directamente.
+
+# ==========================================
+# SISTEMA OPERATIVO Y ENTORNOS (Windows/Mac/IDEs)
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vs/
+.vscode/
+.idea/
