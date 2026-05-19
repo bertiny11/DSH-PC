@@ -1,17 +1,27 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Net.Sockets; // ¡NUEVO!
+using System.Text;        // ¡NUEVO!
 
 public class DrawManager : MonoBehaviour {
     [SerializeField] private GameObject linePrefab; 
     [SerializeField] private CoordinateProjector projector; 
     [SerializeField] private Transform qrAnchor;
     
-    private Color _currentColor = Color.red;
-    private float _currentWidth = 0.1f;
-    
+    [Header("Configuración de Red Temporal")]
+    [SerializeField] private string targetIP = "127.0.0.1"; // IP de las gafas (o tu propio PC para pruebas)
+    [SerializeField] private int targetPort = 47777;        // Puerto para los datos del JSON
+    private UdpClient _udpClient;
 
+    private Color _currentColor = Color.red;
+    private float _currentWidth = 0.02f;
     private LineRenderer _currentLine;
     private List<Vector3> _points = new List<Vector3>();
+
+    void Start() {
+        // Inicializamos el cliente UDP propio del Equipo B
+        _udpClient = new UdpClient();
+    }
 
     void Update() {
         if (Input.GetMouseButtonDown(0)) CreateLine();
@@ -52,9 +62,27 @@ public class DrawManager : MonoBehaviour {
 
             string jsonMessage = JsonUtility.ToJson(newStroke);
             Debug.Log("JSON LISTO: " + jsonMessage);
+
+            // ¡ENVIAMOS EL JSON DE FORMA AUTÓNOMA!
+            SendJSONOverNetwork(jsonMessage);
         }
         _currentLine = null;
         _points.Clear();
+    }
+
+    void SendJSONOverNetwork(string message) {
+        try {
+            byte[] data = Encoding.UTF8.GetBytes(message);
+            _udpClient.Send(data, data.Length, targetIP, targetPort);
+            Debug.Log($"JSON enviado correctamente a {targetIP}:{targetPort}");
+        }
+        catch (System.Exception e) {
+            Debug.LogError("Error al enviar el JSON: " + e.Message);
+        }
+    }
+
+    void OnApplicationQuit() {
+        if (_udpClient != null) _udpClient.Close();
     }
 
     public void SetColorRed() { _currentColor = Color.red; }
